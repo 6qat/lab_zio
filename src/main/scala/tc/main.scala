@@ -7,13 +7,13 @@ object Progs {
 
     override lazy val run = {
       // ZIO.none
-      lab.program.exitCode
+      lab.program
     }
   }
 
   object Prog2 extends ZIOAppDefault {
     override lazy val run = {
-      lab.program.exitCode
+      lab.program
     }
   }
 }

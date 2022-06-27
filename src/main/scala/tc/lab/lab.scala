@@ -10,7 +10,7 @@ val nodeConfigLayer: ZLayer[Any, Throwable, NodeConfig] = {
     val config = ConfigFactory
       .systemProperties()
       .withFallback(ConfigFactory.load())
-    NodeConfig(config.getString("host"), config.getInt("port"))
+    NodeConfig(config.getString("host"), config.getInt("port1"))
   }
 
   ZLayer.fromZIO(task)
