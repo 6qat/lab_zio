@@ -171,5 +171,3 @@ val fib100Fiber: UIO[Fiber[Nothing, Long]] =
   for {
     fiber <- fib(100).fork
   } yield fiber
-
-  

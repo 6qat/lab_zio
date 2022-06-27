@@ -8,4 +8,6 @@ project/target/
 project/project/
 project/.bloop/
 .metals/
+project/metals.sbt
 null/
+.bloop/

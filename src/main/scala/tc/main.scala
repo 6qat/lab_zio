@@ -15,14 +15,16 @@ object Progs {
         .withFallback(ConfigFactory.load())
       NodeConfig(config.getString("host"), config.getInt("port"))
     }
+    val devConfig: UIO[NodeConfig] =
+      ZIO.succeed(NodeConfig("localhost", 1020))
+
     val bothConfig: Task[Map[String, NodeConfig]] = for {
       prod <- prodConfig
-      dev = NodeConfig("localhost", 2020)
+      dev <- devConfig
     } yield Map(
       "prod" -> prod,
       "dev" -> dev
     )
-
 
     ZLayer.fromZIO(bothConfig)
 
@@ -35,13 +37,12 @@ object Progs {
 
       println("Prod" + "-" * 100)
 
-      //  nodeConfigLayer {
-      //    myApp
-      //  } // same as bellow
+      nodeConfigLayer {
+        lab.myApp("prod")
+      } // same as bellow
 
-      lab.myApp().provideLayer(nodeConfigLayer) // same as above
+      // lab.myApp().provide(nodeConfigLayer) // same as above
     }
-
 
   }
 
