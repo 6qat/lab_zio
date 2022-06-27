@@ -17,8 +17,8 @@ scalacOptions := Seq(
 
 libraryDependencies ++= {
   val akkaV = "2.6.19"
-  val zioV = "2.0.0-RC6"
-  val zioConfigV = "3.0.0-RC6"
+  val zioV = "2.0.0"
+  val zioConfigV = "3.0.0"
   Seq(
     "org.slf4j" % "slf4j-simple" % "1.7.36",
     "dev.zio" %% "zio" % zioV,
