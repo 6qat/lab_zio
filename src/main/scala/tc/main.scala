@@ -30,7 +30,7 @@ object Progs {
 
   object Prog1 extends ZIOAppDefault {
 
-    override lazy val run = {
+    override lazy val run: ZIO[Any & ZIOAppArgs & Scope, Throwable, Unit] = {
       println("Prod" + "-" * 100)
       nodeConfigLayer {
         lab.MyApp.myApp("prod")
@@ -41,7 +41,7 @@ object Progs {
 
   object Prog2 extends ZIOAppDefault {
 
-    override lazy val run = {
+    override lazy val run: ZIO[Any & ZIOAppArgs & Scope, Any, Any] = {
       println("Dev" + "-" * 100)
       lab.MyApp.myApp("dev").provide(nodeConfigLayer)
     }
