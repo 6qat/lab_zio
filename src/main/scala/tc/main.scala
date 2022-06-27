@@ -3,8 +3,6 @@ package tc
 import com.typesafe.config.ConfigFactory
 import zio.*
 
-import scala.collection.immutable.Map
-
 object Progs {
 
   def nodeConfigLayer: ZLayer[Any, Throwable, Map[String, NodeConfig]] = {
@@ -33,27 +31,23 @@ object Progs {
   object Prog1 extends ZIOAppDefault {
 
     override lazy val run = {
-      // ZIO.none
-
       println("Prod" + "-" * 100)
-
       nodeConfigLayer {
-        lab.myApp("prod")
-      } // same as bellow
-
-      // lab.myApp().provide(nodeConfigLayer) // same as above
+        lab.MyApp.myApp("prod")
+      }
     }
 
   }
 
   object Prog2 extends ZIOAppDefault {
+
     override lazy val run = {
       println("Dev" + "-" * 100)
-      lab.myApp("dev").provideLayer(nodeConfigLayer)
+      lab.MyApp.myApp("dev").provide(nodeConfigLayer)
     }
   }
+
 }
 
 import tc.Progs.*
-
 object MainProg extends ZIOApp.Proxy(Prog1 <> Prog2)

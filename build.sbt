@@ -1,6 +1,6 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "3.1.2" //"2.13.8" //
+ThisBuild / scalaVersion := "2.13.8" //"3.1.2" //"2.13.8" //
 
 // bloop run root -w
 
@@ -9,8 +9,8 @@ scalacOptions := Seq(
   "-unchecked",
   "-deprecation",
   "-encoding",
-  "utf8"
-  // "-Xsource:3"
+  "utf8",
+  "-Xsource:3"
   // "-language:postfixOps",
   // "-language:strictEquality"
 )
