@@ -1,12 +1,12 @@
 package tc.lab
 
 import com.typesafe.config.ConfigFactory
-import tc.Config.*
+import tc.{AppConfig, NodeConfig}
 import zio.*
 
 val nodeConfigLayer: ZLayer[Any, Throwable, NodeConfig] = {
 
-  val task: Task[NodeConfig] = ZIO.attempt {
+  lazy val task: Task[NodeConfig] = ZIO.attempt {
     val config = ConfigFactory
       .systemProperties()
       .withFallback(ConfigFactory.load())
@@ -26,9 +26,9 @@ val myApp: ZIO[NodeConfig, Nothing, Unit] =
 val program: ZIO[Any, Throwable, Unit] = {
   println("-" * 100)
 
-  nodeConfigLayer {
-    myApp
-  } // same as bellow
+//  nodeConfigLayer {
+  //    myApp
+  //  } // same as bellow
 
-  myApp.provide(nodeConfigLayer) // same as above
+  myApp.provideLayer(nodeConfigLayer) // same as above
 }
