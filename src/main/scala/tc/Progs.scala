@@ -1,7 +1,7 @@
 package tc
 
 import com.typesafe.config.ConfigFactory
-import zio.*
+import zio.{Scope, Task, UIO, ZIO, ZIOAppArgs, ZIOAppDefault, ZLayer}
 
 object Progs {
 
@@ -48,6 +48,3 @@ object Progs {
   }
 
 }
-
-import tc.Progs.*
-object MainProg extends ZIOApp.Proxy(Prog1 <> Prog2)
