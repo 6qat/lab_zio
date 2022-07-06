@@ -31,11 +31,11 @@ libraryDependencies ++= {
     "dev.zio" %% "zio-config-magnolia" % zioConfigV,
     "io.d11" %% "zhttp" % zioHttpV,
     "io.d11" %% "zhttp-test" % zioHttpV % Test
-  ) ++ (Seq(
+  ) ++ Seq(
     "com.typesafe.akka" %% "akka-actor-typed" % akkaV,
     "com.typesafe.akka" %% "akka-stream" % akkaV,
-    "com.typesafe.akka" %% "akka-http" % akkaHttpV,
-  ).map(_.cross(CrossVersion.for3Use2_13)))
+    "com.typesafe.akka" %% "akka-http" % akkaHttpV
+  ).map(_.cross(CrossVersion.for3Use2_13))
 
 }.map(_.withSources().withJavadoc())
 
