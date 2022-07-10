@@ -30,12 +30,12 @@ object MyAkkaHttpServer extends ZIOAppDefault {
   val app = ZIO.scoped {
     scopedActorSystem.flatMap { implicit system =>
       for {
-        sb <- ZIO.fromFuture(ec =>
+        sb <- ZIO.fromFuture(_ =>
           Http().newServerAt("localhost", 8080).bind(route)
         )
         _ <- Console.printLine(s"Server bound to ${sb.localAddress}")
         _ <- Console.readLine("Press any key...")
-        _ <- ZIO.fromFuture(ec => sb.unbind())
+        _ <- ZIO.fromFuture(_ => sb.unbind())
       } yield ()
 
     }
