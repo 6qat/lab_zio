@@ -1,6 +1,7 @@
 package tc.daniel.zio
 
 import scala.concurrent.Future
+import scala.io.StdIn
 
 object Effects {
 
@@ -78,10 +79,44 @@ object Effects {
 //      new MyIO2(f(unsafeRun).unsafeRun)
   }
 
+  // Exercises
+
+  val currentTime: MyIO[Long] = MyIO(() => System.currentTimeMillis())
+
+  def measure[A](computation: MyIO[A]): MyIO[(Long, A)] = for {
+    initialTime <- currentTime
+    result <- computation
+    endTime <- currentTime
+  } yield (endTime - initialTime, result)
+
+  def demoMeasurement(): Unit = {
+
+    val computation = MyIO(() => {
+      println("Crunching numbers...")
+      Thread.sleep(1000)
+      println("Done!")
+      42
+    })
+
+    println(measure(computation).unsafeRun())
+    println(measure(computation).unsafeRun())
+
+  }
+
+  val readLine: MyIO[String] = MyIO(() => StdIn.readLine())
+
+  def putStrLn(line: String): MyIO[Unit] = MyIO(() => println(line))
+
+  val program = for {
+    _ <- putStrLn("What is your name?")
+    name <- readLine
+    _ <- putStrLn(s"Hello, $name")
+  } yield ()
 
   def main(args: Array[String]): Unit = {
     anIOWithSideEffects.unsafeRun()
-
+    demoMeasurement()
+    program.unsafeRun()
   }
 
 }
