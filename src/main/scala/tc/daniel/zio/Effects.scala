@@ -70,13 +70,25 @@ object Effects {
     42
   }
 
-  // My own exercise. ******  BEWARE !!!! *********
-  class MyIO2[A](unsafeRun: => A) {
-//    def unsafeRun: A = unsafeRun
-    def map[B](f: A => B): MyIO2[B] =
-      new MyIO2(f(unsafeRun))
-//    def flatMap[B](f: A => MyIO2[B]) =
-//      new MyIO2(f(unsafeRun).unsafeRun)
+  /*
+      A simplified ZIO
+   */
+  case class MyIO_v2[-R, +E, +A](unsafeRun: R => Either[E, A]) {
+    def map[B](f: A => B): MyIO_v2[R, E, B] =
+      MyIO_v2(r =>
+        unsafeRun(r) match {
+          case Left(e)      => Left(e)
+          case Right(value) => Right(f(value))
+        }
+      )
+
+    def flatMap[R1 <: R,  E1 >: E, B](f: A => MyIO_v2[R1, E1, B]): MyIO_v2[R1, E1, B] =
+      MyIO_v2(r =>
+        unsafeRun(r) match {
+          case Left(e)      => Left(e)
+          case Right(value) => f(value).unsafeRun(r)
+        }
+      )
   }
 
   // Exercises
