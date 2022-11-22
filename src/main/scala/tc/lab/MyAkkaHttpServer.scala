@@ -1,7 +1,7 @@
 package tc.lab
 
 import akka.actor.typed.ActorSystem
-import akka.actor.typed.javadsl.Behaviors
+import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives.{complete, get, path}
